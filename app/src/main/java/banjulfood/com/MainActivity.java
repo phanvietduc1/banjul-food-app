@@ -28,9 +28,13 @@ import java.util.List;
 
 import banjulfood.com.activity.AdminOrdersActivity;
 import banjulfood.com.activity.ChckOutActivity;
+import banjulfood.com.activity.FoodAddActivity;
 import banjulfood.com.activity.ProductActivity;
+import banjulfood.com.activity.SignInActivity;
+import banjulfood.com.activity.SignUpActivity;
 import banjulfood.com.adapter.AdapterProduct;
 import banjulfood.com.model.ProductModel;
+import banjulfood.com.model.UserModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,8 +67,24 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.action_orders) {
             Intent i = new Intent(this, AdminOrdersActivity.class);
             this.startActivity(i);
+        } else if (item.getItemId() == R.id.action_create_acc) {
+            Intent i = new Intent(this, SignUpActivity.class);
+            this.startActivity(i);
+        } else if (item.getItemId() == R.id.action_login) {
+            Intent i = new Intent(this, SignInActivity.class);
+            this.startActivity(i);
+
         } else if (item.getItemId() == R.id.action_add_product) {
-            Toast.makeText(this, "You clicked on Add New Product", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, FoodAddActivity.class);
+            this.startActivity(i);
+        } else if (item.getItemId() == R.id.action_logout) {
+            Toast.makeText(this, "Logging you out....", Toast.LENGTH_SHORT).show();
+            try {
+                UserModel.deleteAll(UserModel.class);
+                Toast.makeText(this, "Logged you out successfully!", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Toast.makeText(this, "Failed to Log you out because " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -120,15 +140,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initToolbar() {
-        progressBar = findViewById(R.id.progressBar);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setVisibility(View.GONE);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_menu);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Banjul Foods");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setSystemBarColor(this);
+        try {
+            progressBar = findViewById(R.id.progressBar);
+            recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+            recyclerView.setVisibility(View.GONE);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setNavigationIcon(R.drawable.ic_menu);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("Banjul Foods");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setSystemBarColor(this);
+        } catch (Exception e) {
+
+        }
     }
 
 
