@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "268589876835",
+    "project_id": "banjul-food",
+    "storage_bucket": "banjul-food.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268589876835:android:afa760e5a00017d7a55a56",
+        "android_client_info": {
+          "package_name": "banjulfood.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "268589876835-pm9bicm9ffi57fsk5b0i3dobq5k6317q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHOS5MlhGIkktPuY909Lp5fBxgegf1oUc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "268589876835-pm9bicm9ffi57fsk5b0i3dobq5k6317q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
