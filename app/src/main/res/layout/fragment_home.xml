@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.home.HomeFragment">
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mừng bạn trở lại"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <com.paulrybitskyi.persistentsearchview.PersistentSearchView
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/welcome"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/persistentSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingLeft="4dp"
+        android:paddingStart="4dp"
+        android:paddingRight="4dp"
+        android:paddingEnd="4dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp"
+        android:background="#EDEDED"
+        app:leftButtonDrawable="@drawable/ic_baseline_arrow_back_24"
+        app:rightButtonDrawable="@drawable/ic_filters"
+        app:clearInputButtonDrawable="@drawable/ic_close"
+        app:queryInputTextColor="@color/primaryTextColor"
+        app:queryInputHintColor="@color/secondaryTextColor"
+        app:queryInputCursorColor="@color/colorAccent"
+        app:queryInputBarIconColor="@color/iconColor"
+        app:progressBarColor="@color/colorAccent"
+        app:dividerColor="@color/dividerColor"
+        app:suggestionIconColor="@color/suggestionIconColor"
+        app:suggestionRecentSearchIconColor="@color/suggestionIconColor"
+        app:suggestionSearchSuggestionIconColor="@color/suggestionIconColor"
+        app:suggestionTextColor="@color/suggestionTextColor"
+        app:suggestionSelectedTextColor="@color/suggestionSelectedTextColor"
+        app:isDismissableOnTouchOutside="true"
+        app:isProgressBarEnabled="true"
+        app:isVoiceInputButtonEnabled="true"
+        app:isClearInputButtonEnabled="true"
+        app:areSuggestionsDisabled="false"
+        app:shouldDimBehind="true"/>
+
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@id/persistentSearchView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:id="@+id/faceScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <ProgressBar
+                    android:visibility="gone"
+                    android:id="@+id/progressBar"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/uudai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ưu đãi tháng 10"
+                    android:textSize="22dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="wrap_content"
+                    android:layout_height="270dp"
+                    android:src="@drawable/image0"
+                    app:layout_constraintTop_toBottomOf="@+id/uudai"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    />
+
+                <me.relex.circleindicator.CircleIndicator
+                    android:id="@+id/circle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    app:layout_constraintTop_toBottomOf="@+id/viewpager"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sản phẩm mới"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="22dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/circle"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    app:layout_constraintTop_toBottomOf="@+id/sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:id="@+id/recyclerView"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical"
+                    android:scrollingCache="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,48 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:minHeight="220dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Signup"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_medium"
-                android:text="... join a thousand of our other happy online customers!"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@android:color/white" />
-
-        </LinearLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
 
         <!-- Login progress -->
         <ProgressBar
@@ -51,13 +31,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_xlarge"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
 
         <ScrollView
             android:id="@+id/login_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            >
 
             <RelativeLayout
                 android:id="@+id/email_login_form"
@@ -74,6 +59,7 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -158,6 +144,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -192,7 +179,16 @@
         </ScrollView>
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/signin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chưa có tài khoản ? Đăng kí ngay"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

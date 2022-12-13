@@ -5,88 +5,124 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/spacing_medium"
     app:cardBackgroundColor="@android:color/white"
-    app:cardCornerRadius="2dp"
-    app:cardElevation="2dp">
+    app:cardCornerRadius="7dp"
+    app:cardElevation="2dp"
+    >
 
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lyt_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clickable="true"
-        android:orientation="vertical">
+        >
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="150dp"
-            android:scaleType="centerCrop" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/image0"
+            />
 
-        <View
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/image"
+            android:id="@+id/title"
             android:layout_width="0dp"
-            android:layout_height="@dimen/spacing_medium" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="Product Name"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/grey_90" />
 
-            <View
-                android:layout_width="@dimen/spacing_middle"
-                android:layout_height="0dp" />
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xmedium"
-                android:layout_weight="2"
-                android:text="Product Name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/grey_90" />
-
-
-            <View
-                android:layout_width="@dimen/spacing_small"
-                android:layout_height="0dp" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/spacing_medium" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintLeft_toLeftOf="@id/title"
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:text="$ 80.00"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/red_900"
+            android:textStyle="bold" />
 
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$ 80.00"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="@dimen/spacing_middle"
-                android:layout_height="0dp" />
-
-        </LinearLayout>
-
-        <View
+        <TextView
+            app:layout_constraintTop_toBottomOf="@id/price"
+            app:layout_constraintLeft_toLeftOf="@id/title"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/des"
             android:layout_width="0dp"
-            android:layout_height="@dimen/spacing_middle" />
+            android:layout_height="wrap_content"
+            android:text="Mô tả: Mới 100%, nguyên hộp còn seal, đầy đủ phụ kiện từ nhà sản xuất. Bảo hành chính hãng 12 tháng tại trung tâm bảo hành ủy quyền, 1 đổi 1 trong 30 ngày nếu có lỗi phần cứng từ NSX."
+            />
 
-    </LinearLayout>
 
+        <TextView
+            app:layout_constraintTop_toBottomOf="@id/des"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/chitiet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xem chi tiet"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/red_900"
+            android:textStyle="bold" />
+
+
+<!--        <View-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="@dimen/spacing_medium" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <View-->
+<!--                android:layout_width="@dimen/spacing_middle"-->
+<!--                android:layout_height="0dp" />-->
+
+
+
+
+<!--            <View-->
+<!--                android:layout_width="@dimen/spacing_small"-->
+<!--                android:layout_height="0dp" />-->
+
+<!--        </LinearLayout>-->
+
+<!--        <View-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="@dimen/spacing_medium" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:orientation="horizontal">-->
+
+
+<!--            <View-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1" />-->
+
+
+
+<!--            <View-->
+<!--                android:layout_width="@dimen/spacing_middle"-->
+<!--                android:layout_height="0dp" />-->
+
+<!--        </LinearLayout>-->
+
+<!--        <View-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="@dimen/spacing_middle" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
