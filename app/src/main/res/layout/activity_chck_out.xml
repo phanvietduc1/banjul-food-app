@@ -39,7 +39,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Checkout"
+                        android:text=""
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/grey_80"
                         app:fontFamily="sans-serif-medium" />
@@ -68,7 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Products"
+                android:text="Sản phẩm"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/grey_90"
                 app:fontFamily="sans-serif-medium" />
@@ -123,7 +123,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Payment"
+                    android:text="Liên lạc"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/grey_90"
                     app:fontFamily="sans-serif-medium" />
@@ -144,26 +144,29 @@
                 android:padding="@dimen/spacing_large">
 
                 <EditText
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/spacing_xlarge"
                     android:background="@drawable/edit_text_round_bg_outline"
-                    android:hint="Full Name"
+                    android:hint="Họ và tên"
                     android:minHeight="@dimen/spacing_xmlarge" />
 
                 <EditText
+                    android:id="@+id/phone"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/spacing_xlarge"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:background="@drawable/edit_text_round_bg_outline"
-                    android:hint="Phone Number"
+                    android:hint="Số điện thoại"
                     android:minHeight="@dimen/spacing_xmlarge" />
 
                 <EditText
+                    android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/spacing_xlarge"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:background="@drawable/edit_text_round_bg_outline"
-                    android:hint="Contact"
+                    android:hint="Địa chỉ"
                     android:minHeight="@dimen/spacing_xmlarge" />
 
             </LinearLayout>
@@ -175,12 +178,24 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/spacing_large" />
 
+        <TextView
+            android:id="@+id/tongtien"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng tiền: "
+            android:layout_gravity="right"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_large" />
+
         <Button
             android:id="@+id/submit_order"
             android:layout_width="match_parent"
             android:layout_height="@dimen/actionBarSize"
             android:backgroundTint="@color/colorPrimary"
-            android:text="SUBMIT ORDER"
+            android:text="Đặt hàng"
             android:textSize="20dp" />
 
     </LinearLayout>

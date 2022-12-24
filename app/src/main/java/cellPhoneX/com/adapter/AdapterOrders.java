@@ -43,11 +43,13 @@ public class AdapterOrders extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public TextView customer_address;
         public TextView total_price;
         public View lyt_parent;
+        public TextView complete;
 
         public OriginalViewHolder(View v) {
             super(v);
             customer_name = (TextView) v.findViewById(R.id.customer_name);
             customer_address = (TextView) v.findViewById(R.id.customer_address);
+            complete = (TextView) v.findViewById(R.id.complete);
             total_price = (TextView) v.findViewById(R.id.total_price);
             lyt_parent = (View) v.findViewById(R.id.lyt_parent);
         }
@@ -82,7 +84,7 @@ public class AdapterOrders extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             final OrderModel o = items.get(position);
             view.customer_name.setText(o.customer.first_name + " " + o.customer.last_name);
             view.customer_address.setText(o.customer.address);
-
+            view.complete.setText(o.complete);
 
             tot = 0;
             for (CartModel c : o.cart) {
@@ -93,7 +95,7 @@ public class AdapterOrders extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
             }
 
-            view.total_price.setText("$ " + tot);
+            view.total_price.setText(o.money);
 
 
             view.lyt_parent.setOnClickListener(new View.OnClickListener() {
@@ -108,11 +110,8 @@ public class AdapterOrders extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-
     @Override
     public int getItemCount() {
         return items.size();
     }
-
-
 }

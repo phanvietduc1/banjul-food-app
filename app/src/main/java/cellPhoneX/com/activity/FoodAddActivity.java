@@ -93,7 +93,7 @@ public class FoodAddActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select product image"), PICK_IMAGE_REQUEST);
     }
 
-    public static final String[] categories = new String[]{"Women", "Men", "Kids", "Electronics"};
+    public static final String[] categories = new String[]{"Iphone", "Samsung", "Xiaomi"};
 
     int selected_category = -1;
 

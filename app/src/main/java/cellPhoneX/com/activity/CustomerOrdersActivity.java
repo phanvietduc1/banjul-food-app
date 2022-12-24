@@ -1,16 +1,23 @@
 package cellPhoneX.com.activity;
 
+import static cellPhoneX.com.activity.ChckOutActivity.CUSTOMER_ORDERS;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import cellPhoneX.com.R;
+import cellPhoneX.com.adapter.AdapterOrders;
+import cellPhoneX.com.model.OrderModel;
+import cellPhoneX.com.model.UserModel;
+import cellPhoneX.com.tools.Utils;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -18,26 +25,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import cellPhoneX.com.R;
-import cellPhoneX.com.adapter.AdapterOrders;
-import cellPhoneX.com.model.OrderModel;
-
-import static cellPhoneX.com.MainActivity.setSystemBarColor;
-import static cellPhoneX.com.activity.ChckOutActivity.CUSTOMER_ORDERS;
-
-public class AdminOrdersActivity extends AppCompatActivity {
+public class CustomerOrdersActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_orders);
+        setContentView(R.layout.activity_customer_orders);
 
+        UserModel loggedInUser = Utils.get_logged_in_user();
         initToolbar();
-        get_data();
-
-
+        get_data(loggedInUser.email);
 
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,8 +50,11 @@ public class AdminOrdersActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     List<OrderModel> orders = new ArrayList<>();
 
-    private void get_data() {
-        db.collection(CUSTOMER_ORDERS).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+    private void get_data(String email) {
+        db.collection(CUSTOMER_ORDERS)
+                .whereEqualTo("customer.email", email)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 orders = queryDocumentSnapshots.toObjects(OrderModel.class);
@@ -83,22 +86,22 @@ public class AdminOrdersActivity extends AppCompatActivity {
         mAdapter = new AdapterOrders(orders, this, "0");
         recyclerView.setAdapter(mAdapter);
 
-        TextView v = findViewById(R.id.doanhthu);
-        int tongprice = 0;
-        for (int i=0; i<orders.size(); i++)
-        {
-            tongprice += Integer.valueOf(orders.get(i).money.replaceAll("[^0-9]", ""));
-        }
-        v.setText("Tổng doanh thu: " + tongprice + " vnđ");
+//        TextView v = findViewById(R.id.doanhthu);
+//        int tongprice = 0;
+//        for (int i=0; i<orders.size(); i++)
+//        {
+//            tongprice += Integer.valueOf(orders.get(i).money.replaceAll("[^0-9]", ""));
+//        }
+//        v.setText("Tổng doanh thu: " + tongprice + " vnđ");
 
 
         // on item list clicked
         mAdapter.setOnItemClickListener(new AdapterOrders.OnItemClickListener() {
             @Override
             public void onItemClick(View view, OrderModel obj, int position) {
-                Intent i = new Intent(AdminOrdersActivity.this, AdminOrderActivity.class);
+                Intent i = new Intent(CustomerOrdersActivity.this, CustomerOrderActivity.class);
                 i.putExtra("order_id", obj.order_id);
-                AdminOrdersActivity.this.startActivity(i);
+                CustomerOrdersActivity.this.startActivity(i);
             }
         });
 
@@ -120,5 +123,4 @@ public class AdminOrdersActivity extends AppCompatActivity {
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        setSystemBarColor(this);
     }
-
 }

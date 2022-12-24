@@ -3,8 +3,11 @@ package cellPhoneX.com.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,9 +16,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,25 +40,38 @@ import static cellPhoneX.com.MainActivity.setSystemBarColor;
 public class ChckOutActivity extends AppCompatActivity {
 
     UserModel loggedInUser;
+    EditText name;
+    EditText phone;
+    EditText address;
+    TextView tongtien;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chck_out);
 
-        loggedInUser = Utils.get_logged_in_user();
-        if (loggedInUser == null) {
-            Toast.makeText(this, "You are not logged in.", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(this, SignUpActivity.class);
-            this.startActivity(i);
-            finish();
-            return;
-        }
-
-
         //initToolbar();
-
         get_cart_data();
+        get_data();
+    }
+
+    private void get_data() {
+        int tongprice = 0;
+        UserModel loggedInUser = Utils.get_logged_in_user();
+
+        name = findViewById(R.id.name);
+        phone = findViewById(R.id.phone);
+        address = findViewById(R.id.address);
+        tongtien = findViewById(R.id.tongtien);
+
+        name.setText(loggedInUser.last_name);
+        phone.setText(loggedInUser.phone_number);
+        address.setText(loggedInUser.address);
+        for (int i=0; i<products.size(); i++)
+        {
+            tongprice += products.get(i).price;
+        }
+        tongtien.setText(String.valueOf(tongprice));
     }
 
     List<CartModel> cartModels = null;
@@ -122,6 +142,7 @@ public class ChckOutActivity extends AppCompatActivity {
         orderModel.order_id = db.collection(CUSTOMER_ORDERS).document().getId();
         orderModel.customer = loggedInUser;
         orderModel.cart = cartModels;
+        orderModel.complete = "Chưa hoàn thành";
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait....");
         progressDialog.setCancelable(false);

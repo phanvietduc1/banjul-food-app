@@ -3,60 +3,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ProductActivity">
+    android:id="@+id/mainlayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.ProductActivity"
+    android:fillViewport="true"
+    >
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        >
 
         <ImageView
-            android:id="@+id/product_image"
-            android:layout_width="match_parent"
-            android:layout_height="400dp" />
+            android:id="@+id/back"
+            android:layout_margin="15dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            />
 
-        <LinearLayout
+        <ImageView
+            android:layout_margin="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/back"
+            android:id="@+id/product_image"
+            android:src="@drawable/image0"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            />
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            app:layout_constraintTop_toBottomOf="@id/product_image"
+            app:layout_constraintLeft_toLeftOf="@id/product_image"
+            android:id="@+id/product_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Name"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:visibility="invisible"
+            android:id="@+id/an_hien"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/product_title"
+            android:text="Hiện"
+            />
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            app:layout_constraintTop_toBottomOf="@id/product_title"
+            app:layout_constraintLeft_toLeftOf="@id/product_image"
+            android:id="@+id/product_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_large"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="$40"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@color/red_900"
+            />
 
-            <TextView
-                android:id="@+id/product_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Product Name"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+        <TextView
+            android:layout_marginLeft="20dp"
+            app:layout_constraintTop_toBottomOf="@id/product_price"
+            app:layout_constraintLeft_toLeftOf="@id/product_image"
+            android:id="@+id/product_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="Details go here.."
+            android:textSize="18dp" />
 
-            <TextView
-                android:id="@+id/product_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:gravity="right"
-                android:text="$40"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+        <Button
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/add_to_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="Add to Cart" />
 
-
-            <TextView
-                android:id="@+id/product_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:text="Details go here.."
-                android:textSize="18dp" />
-
-            <Button
-                android:id="@+id/add_to_cart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:text="Add to Cart" />
-        </LinearLayout>
-
-
-    </LinearLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

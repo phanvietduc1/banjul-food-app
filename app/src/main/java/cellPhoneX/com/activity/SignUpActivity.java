@@ -77,12 +77,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void validate_data() {
         new_user.first_name = first_name_view.getText().toString();
-        new_user.first_name = "tempFirstName";
-        if (new_user.first_name.length() < 2) {
-            Toast.makeText(this, "First name too short.", Toast.LENGTH_SHORT).show();
-            first_name_view.requestFocus();
-            return;
-        }
 
         new_user.last_name = last_name_view.getText().toString();
         if (new_user.last_name.length() < 2) {
@@ -104,7 +98,6 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
         new_user.address = address_view.getText().toString();
-        new_user.address = "tempAddress";
         new_user.phone_number = phone_number_view.getText().toString();
         new_user.user_type = "customer";
         new_user.gender = "";
@@ -157,7 +150,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         if (login_user()) {
                                             Toast.makeText(SignUpActivity.this, "" +
                                                     "You account was logged in successfully.", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                            Intent intent = new Intent(SignUpActivity.this, MainNewActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                             SignUpActivity.this.startActivity(intent);
                                             return;

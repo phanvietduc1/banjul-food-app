@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cellPhoneX.com" >
+    package="cellPhoneX.com">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,13 +11,25 @@
         android:label="Cell Phone X"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BanjulFood" >
+        android:theme="@style/Theme.BanjulFood">
+        <activity
+            android:name=".activity.CustomerOrdersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CustomerOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.InfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.SecondActivity"
             android:exported="false" />
         <activity
             android:name=".activity.StartActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,11 +57,10 @@
 
         <activity android:name=".activity.SignUpActivity" />
         <activity android:name=".activity.FoodAddActivity" />
-        <activity android:name=".MainActivity" >
-        </activity>
-        <activity android:name=".activity.MainNewActivity"
-            android:exported="false">
-        </activity>
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".activity.MainNewActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

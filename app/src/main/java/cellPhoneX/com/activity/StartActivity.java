@@ -5,6 +5,7 @@ import cellPhoneX.com.R;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -19,17 +20,17 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        Intent i = new Intent(this, SecondActivity.class);
-        this.startActivity(i);
+//        Intent i = new Intent(this, SecondActivity.class);
+//        this.startActivity(i);
 
-//        try {
-//            Thread.sleep(7 * 1000);
-//
-//            Intent i = new Intent(this, SecondActivity.class);
-//            this.startActivity(i);
-//        } catch (InterruptedException ie) {
-//            Thread.currentThread().interrupt();
-//        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                myTask();
+            }
+        }, 3000);
+
     }
 
     public void myTask() {

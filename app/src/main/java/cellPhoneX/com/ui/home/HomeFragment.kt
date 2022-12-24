@@ -11,6 +11,7 @@ import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import cellPhoneX.com.R
 import cellPhoneX.com.activity.MainNewActivity
 import cellPhoneX.com.activity.ProductActivity
@@ -19,9 +20,11 @@ import cellPhoneX.com.adapter.PhotoAdapter
 import cellPhoneX.com.databinding.FragmentHomeBinding
 import cellPhoneX.com.model.Photo
 import cellPhoneX.com.model.ProductModel
+import cellPhoneX.com.tools.Utils
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.paulrybitskyi.persistentsearchview.PersistentSearchView
 import com.paulrybitskyi.persistentsearchview.listeners.OnSearchConfirmedListener
@@ -50,14 +53,22 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         get_data()
         init()
         persistentSearchView = binding.persistentSearchView
         initSearchView()
 
-        binding.progressBar.visibility = View.GONE
+        var loggedInUser = Utils.get_logged_in_user()
+        binding.welcome.text = "Mừng bạn trở lại,\n" + loggedInUser.last_name
 
-        return root
+        binding.progressBar.visibility = View.GONE
     }
 
     fun init(){
@@ -79,11 +90,26 @@ class HomeFragment : Fragment() {
     var db = FirebaseFirestore.getInstance()
 
     private fun get_data() {
-        db.collection("PRODUCTS").get()
+        val loggedInUser = Utils.get_logged_in_user()
+        if (loggedInUser.user_type == "admin") {
+            db.collection("PRODUCTS")
+                .get()
+                .addOnSuccessListener(OnSuccessListener<QuerySnapshot> { queryDocumentSnapshots ->
+                    products = queryDocumentSnapshots.toObjects(ProductModel::class.java)
+                    initComponents()
+                }).addOnFailureListener(OnFailureListener { initComponents() })
+
+            return
+        }
+
+        db.collection("PRODUCTS")
+            .whereNotEqualTo("hidden", "Ẩn")
+            .get()
             .addOnSuccessListener(OnSuccessListener<QuerySnapshot> { queryDocumentSnapshots ->
                 products = queryDocumentSnapshots.toObjects(ProductModel::class.java)
                 initComponents()
             }).addOnFailureListener(OnFailureListener { initComponents() })
+
     }
 
     private val mOnSearchConfirmedListener = OnSearchConfirmedListener { searchView, query ->
@@ -94,7 +120,7 @@ class HomeFragment : Fragment() {
     private fun performSearch(query: String) = with(binding) {
         progressBar.visibility = View.GONE
         recyclerView.alpha = 0f
-//        progressBar.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
 //        sMedia = ArrayList<ThumbnailItem>()
 
         val runnable = Runnable {
@@ -102,7 +128,7 @@ class HomeFragment : Fragment() {
             persistentSearchView.showLeftButton()
 
             mQuery = query
-//            doGetListAssetByQ(query)
+            getDataQ(query)
             progressBar.visibility = View.GONE
             recyclerView.animate()
                 .alpha(1f)
@@ -133,21 +159,57 @@ class HomeFragment : Fragment() {
     private val mOnSearchQueryChangeListener = OnSearchQueryChangeListener { _, _, newQuery ->
         if(newQuery.isBlank()) {
             //
-//            binding.progressBar.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
             binding.recyclerView.alpha = 1f
-//            gotMedia(ArrayList<ThumbnailItem>(), false)
+            get_data()
         } else {
             performSearch(newQuery)
         }
     }
 
+    private fun getDataQ(sTitle: String){
+        binding.progressBar.visibility = View.GONE
+        binding.recyclerView.alpha = 0f
+
+        val loggedInUser = Utils.get_logged_in_user()
+        if (loggedInUser.user_type == "admin") {
+            db.collection("PRODUCTS")
+                .orderBy("title")
+                .startAt(sTitle.trim())
+                .endAt(sTitle.trim() + "\uf8ff")
+                .get()
+                .addOnSuccessListener(OnSuccessListener<QuerySnapshot> { queryDocumentSnapshots ->
+                    products = queryDocumentSnapshots.toObjects(ProductModel::class.java)
+                    initComponents()
+                }).addOnFailureListener(OnFailureListener {
+                    initComponents()
+                })
+            return
+        }
+
+        db.collection("PRODUCTS")
+            .whereNotEqualTo("hidden", "Ẩn")
+            .orderBy("title")
+            .startAt(sTitle.trim())
+            .endAt(sTitle.trim() + "\uf8ff")
+            .get()
+            .addOnSuccessListener(OnSuccessListener<QuerySnapshot> { queryDocumentSnapshots ->
+                products = queryDocumentSnapshots.toObjects(ProductModel::class.java)
+                initComponents()
+            }).addOnFailureListener(OnFailureListener {
+                initComponents()
+            })
+
+        print("a")
+    }
+
     private fun initComponents() {
-        binding.recyclerView.layoutManager = GridLayoutManager(activity, 1)
+        binding.recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         //recyclerView.addItemDecoration(new SpacingItemDecoration(2, Tools.dpToPx(this, 8), true));
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.setNestedScrollingEnabled(false)
         binding.progressBar.setVisibility(View.GONE)
-//        binding.recyclerView.setVisibility(View.VISIBLE)
+        binding.recyclerView.setVisibility(View.VISIBLE)
         mAdapter = AdapterProduct(products, activity, "0")
         binding.recyclerView.setAdapter(mAdapter)
 
@@ -162,6 +224,6 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+//        _binding = null
     }
 }
