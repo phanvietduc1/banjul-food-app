@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +36,8 @@ import cellPhoneX.com.activity.SignUpActivity;
 import cellPhoneX.com.adapter.AdapterProduct;
 import cellPhoneX.com.model.ProductModel;
 import cellPhoneX.com.model.UserModel;
+import vn.zalopay.sdk.Environment;
+import vn.zalopay.sdk.ZaloPaySDK;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
 
         get_data();
-
     }
 
     @Override
@@ -164,4 +166,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        ZaloPaySDK.getInstance().onResult(intent);
+    }
 }

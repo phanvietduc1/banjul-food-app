@@ -1,9 +1,8 @@
 package cellPhoneX.com.ui.cart
 
-import android.R
 import android.app.ProgressDialog
-import android.content.Intent
 import android.os.Bundle
+import android.os.StrictMode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,23 +19,17 @@ import cellPhoneX.com.model.OrderModel
 import cellPhoneX.com.model.ProductModel
 import cellPhoneX.com.model.UserModel
 import cellPhoneX.com.tools.Utils
+import cellPhoneX.com.zalo.Api.CreateOrder
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
-import org.json.JSONException
 import org.json.JSONObject
-//import vn.momo.momo_partner.AppMoMoLib
+import vn.zalopay.sdk.Environment
+import vn.zalopay.sdk.ZaloPayError
+import vn.zalopay.sdk.ZaloPaySDK
+import vn.zalopay.sdk.listeners.PayOrderListener
 
-
-class CartFragment : Fragment() {
-    private var amount = "10000";
-    private var fee = "0";
-    var environment = 0;//developer default
-    private var merchantName = "Demo SDK";
-    private var merchantCode = "SCB01";
-    private var merchantNameLabel = "Nhà cung cấp";
-    private var description = "Thanh toán dịch vụ ABC";
-
+open class CartFragment : Fragment() {
     private var _binding: FragmentCartBinding? = null
     var loggedInUser: UserModel? = null
 
@@ -64,100 +57,17 @@ class CartFragment : Fragment() {
         get_cart_data()
         get_data()
 
+
 //        AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
 
         return root
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-    //Get token through MoMo app
-    private fun requestPayment() {
-//        AppMoMoLib.getInstance().setAction(AppMoMoLib.ACTION.PAYMENT)
-//        AppMoMoLib.getInstance().setActionType(AppMoMoLib.ACTION_TYPE.GET_TOKEN)
-////        if (edAmount.getText().toString() != null && edAmount.getText().toString().trim().length() !== 0) {
-////            amount = edAmount.getText().toString().trim();
-////        }
-//
-//        val eventValue: MutableMap<String, Any> = HashMap()
-//        //client Required
-//        eventValue["merchantname"] =
-//            merchantName //Tên đối tác. được đăng ký tại https://business.momo.vn. VD: Google, Apple, Tiki , CGV Cinemas
-//        eventValue["merchantcode"] =
-//            merchantCode //Mã đối tác, được cung cấp bởi MoMo tại https://business.momo.vn
-//        eventValue["amount"] = 3 //Kiểu integer
-//        eventValue["orderId"] =
-//            "orderId123456789" //uniqueue id cho Bill order, giá trị duy nhất cho mỗi đơn hàng
-//        eventValue["orderLabel"] = "Mã đơn hàng" //gán nhãn
-//
-//        //client Optional - bill info
-//        eventValue["merchantnamelabel"] = "Dịch vụ" //gán nhãn
-//        eventValue["fee"] = 0 //Kiểu integer
-//        eventValue["description"] = description //mô tả đơn hàng - short description
-//
-//        //client extra data
-//        eventValue["requestId"] = merchantCode + "merchant_billId_" + System.currentTimeMillis()
-//        eventValue["partnerCode"] = merchantCode
-//        //Example extra data
-//        val objExtraData = JSONObject()
-//        try {
-//            objExtraData.put("site_code", "008")
-//            objExtraData.put("site_name", "CGV Cresent Mall")
-//            objExtraData.put("screen_code", 0)
-//            objExtraData.put("screen_name", "Special")
-//            objExtraData.put("movie_name", "Kẻ Trộm Mặt Trăng 3")
-//            objExtraData.put("movie_format", "2D")
-//        } catch (e: JSONException) {
-//            e.printStackTrace()
-//        }
-//        eventValue["extraData"] = objExtraData.toString()
-//        eventValue["extra"] = ""
-//        AppMoMoLib.getInstance().requestMoMoCallBack(activity, eventValue)
-    }
-
-    //Get token callback from MoMo app an submit to server side
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == AppMoMoLib.getInstance().REQUEST_CODE_MOMO && resultCode == -1) {
-//            if (data != null) {
-//                if (data.getIntExtra("status", -1) == 0) {
-//                    //TOKEN IS AVAILABLE
-//                    tvMessage.setText("message: " + "Get token " + data.getStringExtra("message"))
-//                    val token = data.getStringExtra("data") //Token response
-//                    val phoneNumber = data.getStringExtra("phonenumber")
-//                    var env = data.getStringExtra("env")
-//                    if (env == null) {
-//                        env = "app"
-//                    }
-//                    if (token != null && token != "") {
-//                        // TODO: send phoneNumber & token to your server side to process payment with MoMo server
-//                        // IF Momo topup success, continue to process your order
-//                    } else {
-//                        tvMessage.setText("message: " + this.getString(R.string.not_receive_info))
-//                    }
-//                } else if (data.getIntExtra("status", -1) == 1) {
-//                    //TOKEN FAIL
-//                    val message =
-//                        if (data.getStringExtra("message") != null) data.getStringExtra("message") else "Thất bại"
-//                    tvMessage.setText("message: $message")
-//                } else if (data.getIntExtra("status", -1) == 2) {
-//                    //TOKEN FAIL
-//                    tvMessage.setText("message: " + this.getString(R.string.not_receive_info))
-//                } else {
-//                    //TOKEN FAIL
-//                    tvMessage.setText("message: " + this.getString(R.string.not_receive_info))
-//                }
-//            } else {
-//                tvMessage.setText("message: " + this.getString(R.string.not_receive_info))
-//            }
-//        } else {
-//            tvMessage.setText("message: " + this.getString(R.string.not_receive_info_err))
-//        }
-//    }
-
 
     private fun get_data() {
         var tongprice = 0
@@ -227,6 +137,7 @@ class CartFragment : Fragment() {
     var recyclerView: RecyclerView? = null
     private var mAdapter: AdapterProduct? = null
     var submit_order: Button? = null
+    var submit_order2: Button? = null
 
     private fun feed_cart_data() {
         recyclerView = binding.cartProducts
@@ -238,8 +149,12 @@ class CartFragment : Fragment() {
         recyclerView!!.adapter = mAdapter
         submit_order = binding.submitOrder
         submit_order!!.setOnClickListener {
-//            submit_order()
-            requestPayment()
+            submit_order("")
+        }
+
+        submit_order2 = binding.submitOrder2
+        submit_order2!!.setOnClickListener {
+            requestZalo(binding.tongtien.text.toString())
         }
 
         mAdapter!!.setOnRemoveItemClickListener(AdapterProduct.OnRemoveItemClickListener {
@@ -257,12 +172,63 @@ class CartFragment : Fragment() {
     var db = FirebaseFirestore.getInstance()
     var progressDialog: ProgressDialog? = null
 
-    private fun submit_order() {
+    fun requestZalo(money: String){
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
+        // ZaloPay SDK Init
+
+        // ZaloPay SDK Init
+        ZaloPaySDK.init(2553, Environment.SANDBOX)
+
+        val orderApi = CreateOrder()
+
+        try {
+            val data: JSONObject = orderApi.createOrder("10")
+
+            val code = data.getString("return_code")
+
+            if (code == "1") {
+                var token = data.getString("zp_trans_token")
+                ZaloPaySDK.getInstance().payOrder(
+                    requireActivity(),
+                    token,
+                    "demozpdk://app",
+                    object : PayOrderListener {
+                        override fun onPaymentSucceeded(
+                            transactionId: String,
+                            transToken: String,
+                            appTransID: String
+                        ) {
+                            Toast.makeText(activity, "Success", Toast.LENGTH_SHORT).show()
+                            submit_order(token)
+                        }
+
+                        override fun onPaymentCanceled(zpTransToken: String, appTransID: String) {
+                            Toast.makeText(activity, "Cancel", Toast.LENGTH_SHORT).show()
+                        }
+
+                        override fun onPaymentError(
+                            zaloPayError: ZaloPayError,
+                            zpTransToken: String,
+                            appTransID: String
+                        ) {
+                            Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun submit_order(zalotoken: String) {
         val orderModel = OrderModel()
         orderModel.order_id = db.collection(CUSTOMER_ORDERS).document().id
         orderModel.customer = loggedInUser
         orderModel.cart = cartModels
         orderModel.money = binding.tongtien.text.toString()
+        orderModel.zalotoken = zalotoken
         progressDialog = ProgressDialog(activity)
         progressDialog!!.setTitle("Please wait....")
         progressDialog!!.setCancelable(false)
