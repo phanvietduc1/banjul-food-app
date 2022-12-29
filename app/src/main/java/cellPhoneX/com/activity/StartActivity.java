@@ -23,13 +23,7 @@ public class StartActivity extends AppCompatActivity {
 //        Intent i = new Intent(this, SecondActivity.class);
 //        this.startActivity(i);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                myTask();
-            }
-        }, 3000);
+        myTask();
 
     }
 

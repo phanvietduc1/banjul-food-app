@@ -176,7 +176,8 @@ open class CartFragment : Fragment() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
-        // ZaloPay SDK Init
+        var string = money
+        var result = string.filter { it.isDigit() }
 
         // ZaloPay SDK Init
         ZaloPaySDK.init(2553, Environment.SANDBOX)
@@ -184,7 +185,7 @@ open class CartFragment : Fragment() {
         val orderApi = CreateOrder()
 
         try {
-            val data: JSONObject = orderApi.createOrder("10")
+            val data: JSONObject = orderApi.createOrder("1000")
 
             val code = data.getString("return_code")
 
