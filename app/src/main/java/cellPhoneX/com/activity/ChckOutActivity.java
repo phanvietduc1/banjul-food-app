@@ -142,7 +142,7 @@ public class ChckOutActivity extends AppCompatActivity {
         orderModel.order_id = db.collection(CUSTOMER_ORDERS).document().getId();
         orderModel.customer = loggedInUser;
         orderModel.cart = cartModels;
-        orderModel.complete = "Chưa hoàn thành";
+        orderModel.complete = "Chờ xác nhận";
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait....");
         progressDialog.setCancelable(false);

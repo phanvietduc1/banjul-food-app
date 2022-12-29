@@ -57,6 +57,12 @@ open class CartFragment : Fragment() {
         get_cart_data()
         get_data()
 
+        var loggedInUser = Utils.get_logged_in_user()
+        if (loggedInUser.user_type == "user") {
+            binding.submitOrder.visibility = View.VISIBLE
+            binding.submitOrder2.visibility = View.VISIBLE
+        }
+
 
 //        AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
 

@@ -191,6 +191,7 @@
             android:layout_height="@dimen/spacing_large" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/submit_order"
             android:layout_width="match_parent"
             android:layout_height="@dimen/actionBarSize"
@@ -199,6 +200,7 @@
             android:textSize="20dp" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/submit_order_2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/actionBarSize"

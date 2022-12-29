@@ -8,6 +8,6 @@ public class OrderModel {
     public UserModel customer = new UserModel();
     public List<CartModel> cart = new ArrayList<>();
     public String money = "0";
-    public String complete = "Chưa hoàn thành";
+    public String complete = "Chờ xác nhận";
     public String zalotoken = "";
 }

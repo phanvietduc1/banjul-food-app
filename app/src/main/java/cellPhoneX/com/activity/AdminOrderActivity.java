@@ -90,7 +90,7 @@ public class AdminOrderActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     AdapterProduct mAdapter;
     TextView order_id_view;
-    RadioButton r_a, r_b, r_c, r_0;
+    RadioButton r_a, r_b, r_c, r_0, r_b0, r_c0;
 
     EditText customer_name, customer_address, customer_contact;
     Button delete_order;
@@ -117,20 +117,28 @@ public class AdminOrderActivity extends AppCompatActivity {
         r_0 = findViewById(R.id.radio_0);
         r_a = findViewById(R.id.radio_a);
         r_b = findViewById(R.id.radio_b);
+        r_b0 = findViewById(R.id.radio_0);
         r_c = findViewById(R.id.radio_c);
+        r_c0 = findViewById(R.id.radio_c1);
 
         switch (order.complete){
-            case "Chưa hoàn thành":
+            case "Chờ xác nhận":
                 r_0.setChecked(true);
                 break;
             case "Xác nhận đơn hàng":
                 r_a.setChecked(true);
                 break;
-            case "Vận chuyển":
+            case "Đang vận chuyển":
                 r_b.setChecked(true);
+                break;
+            case "Đã thanh toán":
+                r_b0.setChecked(true);
                 break;
             case "Hoàn thành":
                 r_c.setChecked(true);
+                break;
+            case "Đã huỷ":
+                r_c0.setChecked(true);
                 break;
         }
 
@@ -138,6 +146,8 @@ public class AdminOrderActivity extends AppCompatActivity {
         r_a.setOnCheckedChangeListener(listenerRadio);
         r_b.setOnCheckedChangeListener(listenerRadio);
         r_c.setOnCheckedChangeListener(listenerRadio);
+        r_b0.setOnCheckedChangeListener(listenerRadio);
+        r_c0.setOnCheckedChangeListener(listenerRadio);
 
 
         recyclerView = findViewById(R.id.cart_products);
@@ -185,7 +195,6 @@ public class AdminOrderActivity extends AppCompatActivity {
     CompoundButton.OnCheckedChangeListener listenerRadio = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
             if (b) {
                 String a = compoundButton.getText().toString();
                 update(a);

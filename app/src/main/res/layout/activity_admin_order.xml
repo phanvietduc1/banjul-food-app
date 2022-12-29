@@ -192,7 +192,7 @@
             android:layout_height="wrap_content">
             <RadioButton
                 android:id="@+id/radio_0"
-                android:text="Chưa hoàn thành"
+                android:text="Chờ xác nhận"
                 android:checked="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -204,13 +204,25 @@
 
             <RadioButton
                 android:id="@+id/radio_b"
-                android:text="Vận chuyển"
+                android:text="Đang vận chuyển"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/radio_b1"
+                android:text="Đã thanh toán"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <RadioButton
                 android:id="@+id/radio_c"
                 android:text="Hoàn thành"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/radio_c1"
+                android:text="Đã huỷ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RadioGroup>
